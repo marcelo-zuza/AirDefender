@@ -57,18 +57,37 @@ public class PlayerMovement : MonoBehaviour
     void ReadInput()
     {
         var keyboard = Keyboard.current;
-        if (keyboard == null) return; // Nenhum teclado conectado
+        var gamepad = Gamepad.current;
 
-        // Mapeia WASD para movimento horizontal e vertical
-        horizontalInput = 0;
-        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) horizontalInput = 1;
-        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) horizontalInput = -1;
+        horizontalInput = 0f;
+        verticalInput = 0f;
 
-        verticalInput = 0;
-        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) verticalInput = 1;
-        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) verticalInput = -1;
+        // Input do Teclado
+        if (keyboard != null)
+        {
+            horizontalInput = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) ? 1f :
+                              (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) ? -1f : 0f;
+            verticalInput = (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) ? 1f :
+                            (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) ? -1f : 0f;
+        }
+        // Se não houver teclado e nem gamepad, não há input de movimento
+        if (keyboard == null && gamepad == null) return;
 
-        if(Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextFireTime)
+        // Input do Gamepad (soma-se ao do teclado e depois é limitado)
+        if (gamepad != null)
+        {
+            var leftStick = gamepad.leftStick.ReadValue();
+            horizontalInput += leftStick.x;
+            verticalInput += leftStick.y;
+        }
+
+        // Garante que o input não ultrapasse os limites de -1 a 1
+        
+
+        // Verifica o input de tiro do mouse ou do gamepad
+        bool shootInput = (gamepad != null && gamepad.rightTrigger.wasPressedThisFrame);
+
+        if (shootInput && Time.time >= nextFireTime)
         {
             Shoot();
         }
