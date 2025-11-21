@@ -1,0 +1,56 @@
+# ==============================================================================
+# .gitignore para Projetos Unity
+# ==============================================================================
+
+# Arquivos de Biblioteca (Library) e Cache
+# Estes são arquivos gerados automaticamente pelo Unity e NÃO devem ser rastreados.
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/UserSettings/
+/UnityPackageManager/
+/Assets/AssetStoreTools/
+/Assets/StreamingAssets/
+/Logs/
+
+# Arquivos de Metadados de Múltiplos SOs (macOS, Windows, etc.)
+# Arquivos que podem ser gerados por diferentes sistemas operacionais.
+.DS_Store
+Thumbs.db
+
+# Arquivos Temporários de IDEs
+# Exclui arquivos temporários de editores de código comuns como Visual Studio ou JetBrains Rider.
+# Visual Studio
+.vs/
+
+# JetBrains Rider
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# Arquivos de Compilação
+# Arquivos de executáveis e pacotes de build.
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.dll
+*.bin
+*.so
+*.dylib
+
+# Opcional: Arquivos de Configuração Pessoal/Local
+# Se você tiver arquivos de configuração específicos da sua máquina (por exemplo, configurações de API Keys)
+# que não devem ser compartilhados, adicione-os aqui.
+# /Assets/Resources/APIKeys.txt
