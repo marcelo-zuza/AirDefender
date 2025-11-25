@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float fireRate = 15f;
     [SerializeField] private float nextFireTime = 0f;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
 
@@ -58,11 +58,12 @@ public class PlayerMovement : MonoBehaviour
     {
         var keyboard = Keyboard.current;
         var gamepad = Gamepad.current;
+        var mouse = Mouse.current;
 
         horizontalInput = 0f;
         verticalInput = 0f;
 
-        // Input do Teclado
+        // Input de movimento do Teclado
         if (keyboard != null)
         {
             horizontalInput = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) ? 1f :
@@ -70,8 +71,6 @@ public class PlayerMovement : MonoBehaviour
             verticalInput = (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) ? 1f :
                             (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) ? -1f : 0f;
         }
-        // Se não houver teclado e nem gamepad, não há input de movimento
-        if (keyboard == null && gamepad == null) return;
 
         // Input do Gamepad (soma-se ao do teclado e depois é limitado)
         if (gamepad != null)
@@ -84,9 +83,11 @@ public class PlayerMovement : MonoBehaviour
         // Garante que o input não ultrapasse os limites de -1 a 1
         
 
-        // Verifica o input de tiro do mouse ou do gamepad
-        bool shootInput = (gamepad != null && gamepad.rightTrigger.wasPressedThisFrame);
+        // Verifica o input de tiro (disparo contínuo)
+        bool shootInput = (mouse != null && mouse.leftButton.wasPressedThisFrame) ||
+                          (gamepad != null && gamepad.rightTrigger.wasPressedThisFrame);
 
+        
         if (shootInput && Time.time >= nextFireTime)
         {
             Shoot();

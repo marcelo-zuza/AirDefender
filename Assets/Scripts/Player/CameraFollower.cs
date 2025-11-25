@@ -10,11 +10,11 @@ public class CameraFollower : MonoBehaviour
     public Vector3 offset = new Vector3(0f, 2.5f, -11f);
 
     [Tooltip("Quão rápido a câmera se move para a posição do alvo. Valores menores resultam em um movimento mais suave.")]
-    [Range(0, 10)]
+    [Range(0, 20)]
     public float positionSmoothSpeed = 10f;
 
     [Tooltip("Quão rápido a câmera gira para acompanhar a rotação do alvo. Valores menores resultam em uma rotação mais suave.")]
-    [Range(0, 10)]
+    [Range(0, 20)]
     public float rotationSmoothSpeed = 10f;
 
     void LateUpdate()
