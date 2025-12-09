@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alvo1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 9091480840775657610, guid: 44d2c39e0c243e24683f22d9f6e4dfe2, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

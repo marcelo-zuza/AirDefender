@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alvo4 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 184346, guid: 3cc32b211ba11174199a64a41ce904c2, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 426358, guid: 3cc32b211ba11174199a64a41ce904c2, type: 3}
       propertyPath: m_LocalScale.x
       value: 200

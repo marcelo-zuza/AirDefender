@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 7030755079682629281}
   - component: {fileID: 1905618465552772286}
   - component: {fileID: 5520251047749153969}
+  - component: {fileID: -8503034103386662065}
   m_Layer: 0
   m_Name: Scout
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +156,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
+--- !u!114 &-8503034103386662065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945094694394456249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2171d607d879d562894229234f30252b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5592254951616314848
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alvo2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2295894438927271483, guid: 1086c82f42afbce42aeb0c51f40c9293, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 8939716057124561389, guid: 1086c82f42afbce42aeb0c51f40c9293, type: 3}
       propertyPath: m_LocalScale.x
       value: 10

@@ -20,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
+    public TargetingSystem targetingSystem;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        targetingSystem = GetComponent<TargetingSystem>();
     }
 
     // Update is called once per frame
