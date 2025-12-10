@@ -115,8 +115,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.1777802
-  m_Height: 4.3555603
+  m_Radius: 4
+  m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 0.07074356, z: -0.03804016}
 --- !u!114 &1905618465552772286
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e714690c022293e2eb97611b89504746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
+  speed: 400
   turnSpeed: 2
   rollSpeed: 2
   waypoints: []
@@ -142,7 +142,7 @@ MonoBehaviour:
     m_Bits: 0
   projectilePrefab: {fileID: 1545927871346667045, guid: de1577ba4aa5d0323ae69cb715c466eb, type: 3}
   firePoint: {fileID: 3021593938328421653}
-  fireRate: 2
+  fireRate: 10
 --- !u!114 &5520251047749153969
 MonoBehaviour:
   m_ObjectHideFlags: 0
