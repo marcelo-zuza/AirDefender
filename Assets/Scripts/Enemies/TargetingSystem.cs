@@ -7,11 +7,12 @@ public class TargetingSystem : MonoBehaviour
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject highlighterPrefab;
     [SerializeField] RectTransform highlighterCanvas;
-    [SerializeField] string targetTag = "Enemy";
+    [SerializeField] List<string> targetTags = new List<string> { "Enemy", "building" };
     [SerializeField] float maxTargetingDistance = 5000f;
 
     private List<Target> allTargets = new List<Target>();
     private Dictionary<Target, GameObject> activeHighLighters = new Dictionary<Target, GameObject>();
+    private Dictionary<Target, Collider> targetColliders = new Dictionary<Target, Collider>();
     void Start()
     {
         if(playerCamera == null) playerCamera = Camera.main;
@@ -28,11 +29,16 @@ public class TargetingSystem : MonoBehaviour
     void FindAllTargets()
     {
         allTargets.Clear();
-        GameObject[] targetObjects = GameObject.FindGameObjectsWithTag(targetTag);
-        foreach(var obj in targetObjects)
+        targetColliders.Clear();
+        foreach (string tag in targetTags)
         {
-            Target target = obj.GetComponent<Target>();
-            if(target != null) allTargets.Add(target);
+            GameObject[] targetObjects = GameObject.FindGameObjectsWithTag(tag);
+            foreach (var obj in targetObjects)
+            {
+                Target target = obj.GetComponent<Target>();
+                if (target != null) allTargets.Add(target);
+                if (target != null && obj.GetComponent<Collider>() != null) targetColliders[target] = obj.GetComponent<Collider>();
+            }
         }
     }
 
@@ -47,6 +53,7 @@ public class TargetingSystem : MonoBehaviour
                 {
                     Destroy(activeHighLighters[target]);
                     activeHighLighters.Remove(target);
+                    if (targetColliders.ContainsKey(target)) targetColliders.Remove(target);
                 }
                 continue;
             }
@@ -61,8 +68,16 @@ public class TargetingSystem : MonoBehaviour
                     GameObject newHighlighter = Instantiate(highlighterPrefab, highlighterCanvas);
                     activeHighLighters.Add(target, newHighlighter);
                 }
-                // Atualiza a posição do destaque
-                UpdateHighlighterPosition(target, activeHighLighters[target]); 
+
+                if (target.CompareTag("building"))
+                {
+                    UpdateBuildingHighlighter(target, activeHighLighters[target]);
+                }
+                else
+                {
+                    // Atualiza a posição do destaque para alvos padrão
+                    UpdateHighlighterPosition(target, activeHighLighters[target]);
+                }
             }
             else
             {
@@ -110,5 +125,26 @@ public class TargetingSystem : MonoBehaviour
     {
         Vector2 screenPosition = playerCamera.WorldToScreenPoint(target.transform.position);
         highlighter.transform.position = screenPosition;
+        highlighter.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100); // Tamanho padrão
+    }
+
+    void UpdateBuildingHighlighter(Target target, GameObject highlighter)
+    {
+        if (!targetColliders.ContainsKey(target)) return;
+
+        Collider targetCollider = targetColliders[target];
+        Bounds bounds = targetCollider.bounds;
+
+        // Posição no solo (base do collider)
+        Vector3 groundPosition = bounds.center - new Vector3(0, bounds.extents.y+5, 0);
+        Vector2 screenPosition = playerCamera.WorldToScreenPoint(groundPosition);
+        highlighter.transform.position = screenPosition;
+
+        // Ajusta o tamanho para "circundar" o objeto
+        Vector3[] corners = new Vector3[2];
+        corners[0] = bounds.center + new Vector3(bounds.extents.x, 0, bounds.extents.z);
+        corners[1] = bounds.center - new Vector3(bounds.extents.x, 0, bounds.extents.z);
+        float distance = (playerCamera.WorldToScreenPoint(corners[0]) - playerCamera.WorldToScreenPoint(corners[1])).magnitude;
+        highlighter.GetComponent<RectTransform>().sizeDelta = new Vector2(distance, distance);
     }
 }

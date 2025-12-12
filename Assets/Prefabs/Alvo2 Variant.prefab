@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2295894438927271483, guid: 1086c82f42afbce42aeb0c51f40c9293, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: building
       objectReference: {fileID: 0}
     - target: {fileID: 8939716057124561389, guid: 1086c82f42afbce42aeb0c51f40c9293, type: 3}
       propertyPath: m_LocalScale.x
@@ -120,4 +120,4 @@ MonoBehaviour:
   buildingHealth: 100
   explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
   damageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  flashDuration: 0.15
+  flashDuration: 0.5

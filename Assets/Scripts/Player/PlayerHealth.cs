@@ -78,7 +78,9 @@ public class PlayerHealth : MonoBehaviour
                 return; // Evita que o restante do código seja executado desnecessariamente
             }
             StartCoroutine(DamageColor());
-        }    
+        }
+
+        if(other.CompareTag("Water")) Die();
     }
 
     private void Die()

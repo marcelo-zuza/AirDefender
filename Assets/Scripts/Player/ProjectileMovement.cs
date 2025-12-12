@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProjectileMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    Rigidbody projectileRigidBody;
+    private Rigidbody projectileRigidBody;
     [SerializeField] float projectileSpeed = 600f;
     [SerializeField] float destroyProjectileTime = 3f;
 

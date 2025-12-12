@@ -131,18 +131,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e714690c022293e2eb97611b89504746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 400
-  turnSpeed: 2
+  speed: 200
+  turnSpeed: 100
   rollSpeed: 2
   waypoints: []
-  detectionRange: 200
-  attackRange: 100
+  detectionRange: 300
+  attackRange: 300
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
   projectilePrefab: {fileID: 1545927871346667045, guid: de1577ba4aa5d0323ae69cb715c466eb, type: 3}
   firePoint: {fileID: 3021593938328421653}
-  fireRate: 10
+  fireRate: 100
 --- !u!114 &5520251047749153969
 MonoBehaviour:
   m_ObjectHideFlags: 0

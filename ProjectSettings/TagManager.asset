@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - PlayerProjectile
   - EnemyProjectile
+  - building
+  - Water
   layers:
   - Default
   - TransparentFX

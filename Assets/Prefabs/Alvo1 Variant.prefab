@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9091480840775657610, guid: 44d2c39e0c243e24683f22d9f6e4dfe2, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: building
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -214,4 +214,4 @@ MonoBehaviour:
   buildingHealth: 100
   explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
   damageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  flashDuration: 0.15
+  flashDuration: 0.5
