@@ -212,6 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingHealth: 100
-  explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
+  explosionPrefab: {fileID: 6416890548772670332, guid: d55e502a5c0d78f0e843f82b65985341, type: 3}
   damageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   flashDuration: 0.5

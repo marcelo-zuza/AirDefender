@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float fireRate = 15f;
     [SerializeField] private float nextFireTime = 0f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip shootFX;
+
     public Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
@@ -54,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
     {
         nextFireTime = Time.time + 1f / fireRate;
         Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        if(audioSource != null && shootFX != null) audioSource.PlayOneShot(shootFX);
     }
 
     void ReadInput()

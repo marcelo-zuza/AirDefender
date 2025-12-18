@@ -29,6 +29,11 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Velocidade com que o efeito de dano aparece e desaparece.")]
     [SerializeField] private float flashSpeed = 2f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip crashFX;
+    public AudioClip explosionFX;
+
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -51,6 +56,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerRigidbody != null)
         {
+            if(audioSource != null && crashFX != null) audioSource.PlayOneShot(crashFX);
             Vector3 randomTorque = Random.insideUnitSphere.normalized * collisionTorqueForce;
             playerRigidbody.AddTorque(randomTorque, ForceMode.Impulse);
             playerHealth -= 20;
@@ -89,6 +95,7 @@ public class PlayerHealth : MonoBehaviour
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
+        if(audioSource != null && explosionFX != null) audioSource.PlayOneShot(explosionFX);
         Destroy(gameObject);
     }
     

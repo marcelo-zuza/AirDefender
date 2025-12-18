@@ -1,30 +1,53 @@
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class NewGame : MonoBehaviour
 {
+    [Tooltip("A tela principal do menu.")]
     public GameObject mainScreen;
+    [Tooltip("A tela de instruções.")]
     public GameObject instructions;
-    public bool instructionsActive = false;
+    [Tooltip("O nome da cena do jogo a ser carregada.")]
+    public string gameSceneName = "Level1"; // Ou o nome da sua cena
 
+    public bool m_InstructionsActive = false;
 
-    void Start()
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip buttonClick;
+
+    private void Start()
     {
-        mainScreen = GameObject.Find("MainScreen");
-        instructions = GameObject.Find("Instructions");
-        
-        mainScreen.SetActive(true);
-        instructions.SetActive(false); 
+        // É recomendado atribuir 'mainScreen' e 'instructions' pelo Inspector da Unity.
+        // Se eles não forem atribuídos, desativamos o script para evitar erros.
+        if (mainScreen == null || instructions == null)
+        {
+            Debug.LogError("As variáveis 'mainScreen' e 'instructions' precisam ser atribuídas no Inspector.");
+            enabled = false;
+            return;
+        }
+
+        mainScreen.gameObject.SetActive(true);
+        instructions.gameObject.SetActive(false);
     }
+
+    private void Update()
+    {
+
+    }
+
     public void OpenInstructions()
     {
-        mainScreen.SetActive(false);
-        instructions.SetActive(true);   
-        instructionsActive = true;
+        if(audioSource != null & buttonClick != null) audioSource.PlayOneShot(buttonClick);
+        mainScreen.gameObject.SetActive(false);
+        instructions.gameObject.SetActive(true);
+        m_InstructionsActive = true;
     }
-    public void StartTheGame()
+
+    public void StartGame()
     {
-        if(instructionsActive && Input.GetKeyDown(KeyCode.Return)) SceneManager.LoadScene(1);
+        if(audioSource != null & buttonClick != null) audioSource.PlayOneShot(buttonClick);
+        SceneManager.LoadScene(1);
     }
 }
