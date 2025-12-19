@@ -137,12 +137,18 @@ MonoBehaviour:
   waypoints: []
   detectionRange: 300
   attackRange: 300
+  maneuverDistance: 80
+  aimInaccuracy: 0.5
+  retargetFrequency: 0.25
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
   projectilePrefab: {fileID: 1545927871346667045, guid: de1577ba4aa5d0323ae69cb715c466eb, type: 3}
   firePoint: {fileID: 3021593938328421653}
-  fireRate: 100
+  projectileSpeed: 500
+  fireRate: 0.5
+  audioSource: {fileID: 0}
+  shootFX: {fileID: 8300000, guid: 7e66c432b66c6181ea42dc53c49acbff, type: 3}
 --- !u!114 &5520251047749153969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
+  explosionFX: {fileID: 0}
 --- !u!114 &-8503034103386662065
 MonoBehaviour:
   m_ObjectHideFlags: 0

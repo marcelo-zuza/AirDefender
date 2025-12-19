@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackRange = 100f;
     [Tooltip("Distância ideal que o inimigo tentará manter do jogador durante o ataque.")]
     [SerializeField] private float maneuverDistance = 80f;
+    [Tooltip("Quão impreciso o inimigo é. 0 é mira perfeita, valores maiores aumentam a dispersão.")]
+    [SerializeField] private float aimInaccuracy = 1.5f;
+    [Tooltip("Com que frequência (em segundos) o inimigo recalcula a mira para o ponto de interceptação.")]
+    [SerializeField] private float retargetFrequency = 0.25f;
     [SerializeField] private LayerMask playerLayer; // Para otimizar a detecção
 
     [Header("Configurações de Tiro")]
@@ -22,10 +27,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float projectileSpeed = 500f; // Deve ser igual à velocidade no script do projétil
     [SerializeField] private float fireRate = 2f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    [SerializeField] private AudioClip shootFX;
+
     private Rigidbody rb;
     private Transform player;
     private int currentWaypointIndex = 0;
     private float nextFireTime = 0f;
+    private float nextRetargetTime = 0f;
+    private Vector3 lastPredictedTarget;
 
     private Rigidbody playerRigidbody;
     // Estados da IA
@@ -34,13 +45,14 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         // Encontra o jogador pela tag "Player". Certifique-se de que sua nave tem essa tag.
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
-            playerRigidbody = playerObject.GetComponent<Rigidbody>();
+            playerRigidbody = player.GetComponent<Rigidbody>();
         }
         currentState = AIState.Patrolling;
     }
@@ -103,10 +115,16 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        // Calcula o ponto de interceptação para mirar à frente do jogador
-        Vector3 interceptPoint = PredictInterceptPoint(player.position, playerRigidbody.linearVelocity, firePoint.position, projectileSpeed);
-        // Inimigo sempre tentará olhar para o jogador
-        RotateTowards(interceptPoint);
+        // Recalcula a mira em intervalos para um comportamento mais natural
+        if (Time.time > nextRetargetTime)
+        {
+            // Calcula o ponto de interceptação para mirar à frente do jogador
+            Vector3 interceptPoint = PredictInterceptPoint(player.position, playerRigidbody.linearVelocity, firePoint.position, projectileSpeed);
+            lastPredictedTarget = interceptPoint + (Random.insideUnitSphere * aimInaccuracy); // Adiciona imprecisão
+            nextRetargetTime = Time.time + retargetFrequency;
+        }
+        
+        RotateTowards(lastPredictedTarget);
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -118,7 +136,11 @@ public class EnemyAI : MonoBehaviour
             rb.AddForce(transform.forward * speed, ForceMode.Acceleration);
         }
 
-        if (Time.time >= nextFireTime)
+        // Só atira se estiver mirando na direção do alvo
+        Vector3 directionToTarget = (lastPredictedTarget - firePoint.position).normalized;
+        float angleToTarget = Vector3.Angle(firePoint.forward, directionToTarget);
+
+        if (Time.time >= nextFireTime && angleToTarget < 5f) // Limita o tiro a um cone de 5 graus
         {
             Shoot();
         }
@@ -177,6 +199,10 @@ public class EnemyAI : MonoBehaviour
     void Shoot()
     {
         nextFireTime = Time.time + 1f / fireRate;
+        if (shootFX != null)
+        {
+            AudioSource.PlayClipAtPoint(shootFX, firePoint.position);
+        }
         if (projectilePrefab != null && firePoint != null)
         {
             Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);

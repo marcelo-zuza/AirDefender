@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuildingHealth : MonoBehaviour
 {
     public float buildingHealth = 100f;
+    [SerializeField] AudioClip explosionFX;
     public GameObject explosionPrefab;
 
     [Header("Efeitos de Dano")]
@@ -57,11 +58,29 @@ public class BuildingHealth : MonoBehaviour
 
     void Die()
     {
+        PlayExplosionSound();
         if (explosionPrefab != null)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
+    }
+
+    void PlayExplosionSound()
+    {
+        if (explosionFX == null) return;
+
+        // Cria um objeto temporário para tocar o som
+        GameObject soundObject = new GameObject("ExplosionSound");
+        soundObject.transform.position = transform.position;
+
+        // Adiciona um AudioSource e o configura
+        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+        audioSource.clip = explosionFX;
+        audioSource.Play();
+
+        // Destrói o objeto de som após a duração do clipe
+        Destroy(soundObject, explosionFX.length);
     }
 
     /// <summary>
