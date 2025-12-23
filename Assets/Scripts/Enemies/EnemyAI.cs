@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     [Tooltip("Distância ideal que o inimigo tentará manter do jogador durante o ataque.")]
     [SerializeField] private float maneuverDistance = 80f;
     [Tooltip("Quão impreciso o inimigo é. 0 é mira perfeita, valores maiores aumentam a dispersão.")]
-    [SerializeField] private float aimInaccuracy = 1.5f;
+    [SerializeField] private float aimInaccuracy = 0.1f;
     [Tooltip("Com que frequência (em segundos) o inimigo recalcula a mira para o ponto de interceptação.")]
     [SerializeField] private float retargetFrequency = 0.25f;
     [SerializeField] private LayerMask playerLayer; // Para otimizar a detecção
@@ -59,7 +59,11 @@ public class EnemyAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (player == null) return; // Se não encontrar o jogador, não faz nada.
+        if (player == null)
+        {
+            Debug.Log("Player not found.");
+            return; // Se não encontrar o jogador, não faz nada.
+        }
         
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         UpdateState(distanceToPlayer);
@@ -157,21 +161,17 @@ public class EnemyAI : MonoBehaviour
     private Vector3 PredictInterceptPoint(Vector3 targetPosition, Vector3 targetVelocity, Vector3 shooterPosition, float projectileSpeed)
     {
         Vector3 displacement = targetPosition - shooterPosition;
-        float targetMoveAngle = Vector3.Angle(displacement, targetVelocity);
-        
-        // Se o alvo está se movendo para longe do atirador, a predição pode ser imprecisa ou impossível.
-        // Nesses casos, apenas miramos diretamente.
-        if (targetMoveAngle > 90)
-        {
-            return targetPosition;
-        }
 
         float targetSpeed = targetVelocity.magnitude;
         float a = (targetSpeed * targetSpeed) - (projectileSpeed * projectileSpeed);
         float b = -2 * Vector3.Dot(displacement, targetVelocity);
         float c = displacement.sqrMagnitude;
 
-        float timeToIntercept = (-b - Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
+        float discriminant = b * b - 4 * a * c;
+        if (discriminant < 0) return targetPosition;
+
+        float timeToIntercept = (b - Mathf.Sqrt(discriminant)) / (2 * a);
+        if (timeToIntercept < 0) timeToIntercept = 0;
 
         return targetPosition + targetVelocity * timeToIntercept;
     }

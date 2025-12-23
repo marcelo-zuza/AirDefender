@@ -138,7 +138,7 @@ MonoBehaviour:
   detectionRange: 300
   attackRange: 300
   maneuverDistance: 80
-  aimInaccuracy: 0.5
+  aimInaccuracy: 15
   retargetFrequency: 0.25
   playerLayer:
     serializedVersion: 2
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 872191154564363949, guid: c52942dffb6f1795c81f6ebb68554274, type: 3}
-  explosionFX: {fileID: 0}
+  explosionFX: {fileID: 8300000, guid: 8524588a69a4f3e40bb597b6221138f1, type: 3}
 --- !u!114 &-8503034103386662065
 MonoBehaviour:
   m_ObjectHideFlags: 0
