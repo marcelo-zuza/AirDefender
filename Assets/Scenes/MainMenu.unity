@@ -1451,8 +1451,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Copyright \xA9 2025 Marcelo Zuza and Olemarck Game Studio. All rights
-    reserved"
+  m_Text: "Copyright \xA9 2026 Marcelo Zuza. All rights reserved"
 --- !u!222 &875968736
 CanvasRenderer:
   m_ObjectHideFlags: 0
