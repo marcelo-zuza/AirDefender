@@ -20,10 +20,7 @@ Air Defender is an action-packed aerial combat game where players pilot a fighte
 | Action | Control |
 |--------|---------|
 | Move | WASD / Left Stick |
-| Aim | Mouse / Right Stick |
 | Fire Weapon | Left Click / LT |
-| Roll | Q/E or LB/RB |
-| Boost | Spacebar / A Button |
 
 ## 🛠️ Technical Details
 
