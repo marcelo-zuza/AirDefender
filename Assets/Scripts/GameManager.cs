@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     private bool AllBuldingsDestroyed()
     {
         return totalbuildings > 0 && destroyedBuildings >= totalbuildings;
@@ -87,6 +89,7 @@ public class GameManager : MonoBehaviour
                 winningPanel.gameObject.SetActive(true);
             }
             FreezeGame();
+            if (Input.GetKeyDown(KeyCode.Return)) SceneManager.LoadScene(0);
             
         
     }
